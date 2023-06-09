@@ -38,7 +38,7 @@ public class Wp : MonoBehaviour
         coolTimeStart=true;          //무기교체 쿨타임 시작
         wp[wpNum].SetActive(false);  //현재 무기 비활성화
         wpNum++;                     //다음 무기로 바꿈 불러올 준비
-        if(wpNum>wp.Length) wpNum=0; //무기 번호가 최대치보다 클 시 처음으로 돌아옴
+        if(wpNum>wp.Length-1) wpNum=0; //무기 번호가 최대치보다 클 시 처음으로 돌아옴
         wp[wpNum].SetActive(true);   //바뀐 무기 활성화
     }
     public void coolTime(){          //쿨타임 계산
