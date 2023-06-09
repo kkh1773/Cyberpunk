@@ -49,6 +49,7 @@ namespace StarterAssets
         [Header("Player Grounded")]
         [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
         public bool Grounded = true;
+        public bool Attack = false;
 
         [Tooltip("Useful for rough ground")]
         public float GroundedOffset = -0.14f;
@@ -95,6 +96,7 @@ namespace StarterAssets
         private int _animIDSpeed;
         private int _animIDGrounded;
         private int _animIDJump;
+        private int _animIDDoAttack;
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
 
@@ -159,6 +161,7 @@ namespace StarterAssets
             JumpAndGravity();
             GroundedCheck();
             Move();
+            DoAttack();
         }
 
         private void LateUpdate()
@@ -173,8 +176,20 @@ namespace StarterAssets
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+            _animIDDoAttack = Animator.StringToHash("doAttack");
         }
 
+        private void DoAttack(){
+            if (Input.GetKey(KeyCode.LeftControl)){
+                Attack=true;
+            }else if(Input.GetKeyUp(KeyCode.LeftControl)){
+                Attack=false;
+            }
+            if(_hasAnimator){
+                _animator.SetBool(_animIDDoAttack,Attack);
+            }
+            
+        }
         private void GroundedCheck()
         {
             // set sphere position, with offset
