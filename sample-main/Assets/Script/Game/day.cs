@@ -23,9 +23,11 @@ public class day : MonoBehaviour
 
     void Update()
     {
-        timeText.text=cooltime.ToString();  //쿨타임 잘 작동하는지 확인용
+        timeText.text=Mathf.Round(cooltime).ToString();  //쿨타임 잘 작동하는지 확인용
         if(!timechage){  //쿨타임이 안차면 시간 계산
         coolTime();
+        }else if(timechage){
+            timeText.text="change";
         }
 
         if(daytime&&bottn){            //낮일 때 버튼을 눌러서 변경

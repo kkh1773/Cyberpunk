@@ -14,9 +14,9 @@ public class plater : bang
     void Update()
     {
 
-        if (Input.GetAxisRaw("Attack")==1) //마우스 좌클릭 시 실행
+        if (Input.GetAxisRaw("Attack")==1) 
         {
-            shoot();
+            shoot(.2f);
         }
     }
     

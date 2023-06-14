@@ -17,13 +17,15 @@ public class bang : MonoBehaviour
     {
         
     }
-    public void shoot(){
-        if (ss >= 0.2)
-            {
+    public void shoot(float s){
+        ss += Time.deltaTime;
+        Debug.Log(Time.deltaTime);
+        if (ss >= s)
+        {
             GameObject obj=Instantiate(bb, Firepos.transform.position, Firepos.transform.rotation) ;
             Destroy(obj,3f);
-                ss = 0;
-            }
-            ss += Time.deltaTime;
+            ss = 0;
+        }
+        
     }
 }

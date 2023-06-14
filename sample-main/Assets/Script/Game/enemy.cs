@@ -1,26 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class enemycol : MonoBehaviour
+public class enemy : MonoBehaviour
 {
+    public GameObject con;
     public int hp=10;
-    // Start is called before the first frame update
     void Start()
     {
-        
+        this.gameObject.GetComponent<Animation>().Play("idle");
     }
+    private void Update() {
+    if(hp<=0){
+        con.SetActive(false);
+        this.gameObject.GetComponent<Animation>().Play("death");
+    }
+    }
+     
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
     private void OnCollisionEnter(Collision other) {  //총알 맞았을 때 대미지 입음
     if(other.gameObject.tag=="fire"){
         bb b=other.gameObject.GetComponent<bb>();
-        Debug.Log(b.damage);
         hp-=b.damage;
     }
     }
+    
 }

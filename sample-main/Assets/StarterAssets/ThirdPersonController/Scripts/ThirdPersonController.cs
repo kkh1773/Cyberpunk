@@ -50,6 +50,7 @@ namespace StarterAssets
         [Tooltip("If the character is grounded or not. Not part of the CharacterController built in grounded check")]
         public bool Grounded = true;
         public bool Attack = false;
+        public bool Death = false;
 
         [Tooltip("Useful for rough ground")]
         public float GroundedOffset = -0.14f;
@@ -82,6 +83,7 @@ namespace StarterAssets
 
         // player
         private float _speed;
+        public int hp=100;
         private float _animationBlend;
         private float _targetRotation = 0.0f;
         private float _rotationVelocity;
@@ -97,6 +99,7 @@ namespace StarterAssets
         private int _animIDGrounded;
         private int _animIDJump;
         private int _animIDDoAttack;
+        private int _isDead;
         private int _animIDFreeFall;
         private int _animIDMotionSpeed;
 
@@ -162,6 +165,7 @@ namespace StarterAssets
             GroundedCheck();
             Move();
             DoAttack();
+            Dead();
         }
 
         private void LateUpdate()
@@ -177,6 +181,7 @@ namespace StarterAssets
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
             _animIDDoAttack = Animator.StringToHash("doAttack");
+            _isDead=Animator.StringToHash("isDead");
         }
 
         private void DoAttack(){
@@ -190,6 +195,22 @@ namespace StarterAssets
             }
             
         }
+        private void OnCollisionEnter(Collision other) {
+            if(other.gameObject.tag=="fire"){
+                hp--;
+            }
+        }
+        private void Dead(){
+            if(hp<=0&&!Death){
+                Death=true;
+                if(_hasAnimator){
+                _animator.SetBool(_isDead,true);
+            }
+            }else if(Death){
+                _animator.SetBool(_isDead,false);
+            
+            }
+        }
         private void GroundedCheck()
         {
             // set sphere position, with offset
@@ -199,10 +220,10 @@ namespace StarterAssets
                 QueryTriggerInteraction.Ignore);
 
             // update animator if using character
-            if (_hasAnimator)
-            {
-                _animator.SetBool(_animIDGrounded, Grounded);
-            }
+            //if (_hasAnimator)
+           // {
+            //    _animator.SetBool(_animIDGrounded, Grounded);
+           // }
         }
 
         private void CameraRotation()
@@ -290,7 +311,7 @@ namespace StarterAssets
             if (_hasAnimator)
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
-                _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+              //  _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
             }
         }
 
@@ -305,7 +326,7 @@ namespace StarterAssets
                 if (_hasAnimator)
                 {
                     _animator.SetBool(_animIDJump, false);
-                    _animator.SetBool(_animIDFreeFall, false);
+//                    _animator.SetBool(_animIDFreeFall, false);
                 }
 
                 // stop our velocity dropping infinitely when grounded
@@ -348,7 +369,7 @@ namespace StarterAssets
                     // update animator if using character
                     if (_hasAnimator)
                     {
-                        _animator.SetBool(_animIDFreeFall, true);
+//                        _animator.SetBool(_animIDFreeFall, true);
                     }
                 }
 
